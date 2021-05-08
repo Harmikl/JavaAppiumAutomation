@@ -130,6 +130,15 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void checkingOfInputFieldHasText(){
+        waitForElementPresent(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia' in input field",
+                5
+        );
+    }
+
 
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
