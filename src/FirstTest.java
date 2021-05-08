@@ -115,10 +115,20 @@ public class FirstTest {
         );
 
     }
-//    @Test
-//    public void assertElementHasText(){
-//
-//    }
+    @Test
+    public void assertElementHasText(){
+        WebElement title_of_element = waitForElementPresent(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia'",
+                5
+        );
+        String article_of_title= title_of_element.getAttribute("text");
+        Assert.assertEquals(
+                "We don't see 'Search Wikipedia'",
+                "Search Wikipedia",
+                article_of_title
+        );
+    }
 
 
 
