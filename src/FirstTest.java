@@ -36,19 +36,19 @@ public class FirstTest {
 
     @Test
     public void firstTest() {
-        waitForElementByXpathAndClick( // два слеша означают любую вложенность элементов, * то есть любой элемент, [contains] выражение позволяющее искать по частичному совпадению
-                "//*[contains(@text,'Search Wikipedia')]",
+        waitForElementAndClick( // два слеша означают любую вложенность элементов, * то есть любой элемент, [contains] выражение позволяющее искать по частичному совпадению
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find 'Search Wikipedia'",
                 5
         );
-        waitForElementByXpathAndSendKeys(
-                "//*[contains(@text,'Search…')]",
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
                 "Java",
                 "Cannot find 'Search…'",
                 5
         );
-        waitForElementPresentByXpath(
-                "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']",
+        waitForElementPresent(
+                By.id("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
                 "Cannot find 'Object-oriented programming language' topic searching by Java",
                 15
         );
@@ -56,70 +56,53 @@ public class FirstTest {
 
     @Test
     public void testCancelSearch() {
-        waitForElementByIdhAndClick(
-                "org.wikipedia:id/search_container",
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
                 "Cannot find 'Search Wikipedia'",
                 5
         );
-        waitForElementByIdhAndClick(
-                "org.wikipedia:id/search_close_btn",
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
                 "Cannot find close icon",
                 5
         );
         waitForElementNotPresent(
-                "org.wikipedia:id/search_close_btn",
+                By.id("org.wikipedia:id/search_close_btn"),
                 "X is still on the page",
                 5
         );
     }
 
 
-    private WebElement waitForElementPresentByXpath(String xpath, String error_message, long timeoutInSeconds) {
+    private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
-        By by = By.xpath(xpath);
         return wait.until(
                 ExpectedConditions.presenceOfElementLocated(by)
         );
     }
 
-    private WebElement waitForElementPresentByXpath(String xpath, String error_message) {
-        return waitForElementPresentByXpath(xpath, error_message, 5);
+    private WebElement waitForElementPresent(By by, String error_message) {
+        return waitForElementPresent(by, error_message, 5);
     }
 
-    private WebElement waitForElementByXpathAndClick(String xpath, String error_message, long timeoutInSeconds) {//написали метод который сначала дожидается какого-то
+    private WebElement waitForElementAndClick(By by, String error_message, long timeoutInSeconds) {//написали метод который сначала дожидается какого-то
         //элемента которыый передается в xpath и затем происходит клик
-        WebElement element = waitForElementPresentByXpath(xpath, error_message, timeoutInSeconds);
+        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.click();
         return element;
     }
 
-    private WebElement waitForElementByXpathAndSendKeys(String xpath, String value, String error_message, long timeoutInSeconds) {//написали метод который сначала дожидается какого-то
+    private WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeoutInSeconds) {//написали метод который сначала дожидается какого-то
         //элемента которыый передается в xpath и затем вводит значение
-        WebElement element = waitForElementPresentByXpath(xpath, error_message, timeoutInSeconds);
+        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.sendKeys(value);
         return element;
     }
 
-    private WebElement waitForElementPresentById(String id, String error_message, long timeoutInSeconds) {
+    private boolean waitForElementNotPresent(By by, String error_message, long timeoutInSeconds){//метод проверяет что элемента нету
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
-        By by = By.id(id);
-        return wait.until(
-                ExpectedConditions.presenceOfElementLocated(by)
-        );
-    }
-
-    private WebElement waitForElementByIdhAndClick(String id, String error_message, long timeoutInSeconds) {//написали метод который сначала дожидается какого-то
-        //элемента которыый передается в id и затем происходит клик
-        WebElement element = waitForElementPresentById(id, error_message, timeoutInSeconds);
-        element.click();
-        return element;
-    }
-    private boolean waitForElementNotPresent(String id, String error_message, long timeoutInSeconds){//метод проверяет что элемента нету
-        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
-        wait.withMessage(error_message + "\n");
-        By by = By.id(id);
         return wait.until(
                 ExpectedConditions.invisibilityOfElementLocated(by)
         );
