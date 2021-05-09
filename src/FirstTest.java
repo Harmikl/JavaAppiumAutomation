@@ -115,29 +115,46 @@ public class FirstTest {
         );
 
     }
-    @Test
-    public void assertElementHasText(){
-        WebElement title_of_element = waitForElementPresent(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                "Cannot find 'Search Wikipedia'",
-                5
-        );
-        String article_of_title= title_of_element.getAttribute("text");
-        Assert.assertEquals(
-                "We don't see 'Search Wikipedia'",
-                "Search Wikipedia",
-                article_of_title
-        );
-    }
+ @Test
+ public void cancelSearch(){
+     waitForElementAndClick(
+             By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+             "Cannot find 'Search Wikipedia'",
+             5
+     );
+     waitForElementAndSendKeys(
+             By.xpath("//*[contains(@text,'Search…')]"),
+             "Weather",
+             "Cannot find 'Search…'",
+             10
+     );
+     waitForElementPresent(//1st search result
+             By.xpath("//*[contains(@text,'State of the atmosphere')]"),
+             "Cannot find 'State of the atmosphere'",
+             5
+     );
+     waitForElementPresent(//2nd search result
+             By.xpath("//*[contains(@text,'American radical organization')]"),
+             "Cannot find 'American radical organization'",
+             5
+     );
+     waitForElementAndClear(
+             By.id("org.wikipedia:id/search_src_text"),
+             "Cannot clear 'Weather'",
+             5
+     );
+     waitForElementNotPresent(
+             By.xpath("//*[contains(@text,'State of the atmosphere')]"),
+             "'State of the atmosphere' is still here",
+             5
+     );
+     waitForElementNotPresent(
+             By.xpath("//*[contains(@text,'American radical organization')]"),
+             "'American radical organization' is still here",
+             5
+     );
 
-    @Test
-    public void checkingOfInputFieldHasText(){
-        waitForElementPresent(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                "Cannot find 'Search Wikipedia' in input field",
-                5
-        );
-    }
+ }
 
 
 
