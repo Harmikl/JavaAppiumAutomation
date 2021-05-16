@@ -32,7 +32,7 @@ public class FirstTest {
         capabilities.setCapability("app", "/Users/maksimkharmak/Desktop/JavaAppiumAutomation/apks/org.wikipedia.apk");
         capabilities.setCapability("udid", "1c88f784220d7ece");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-
+        driver.rotate(ScreenOrientation.PORTRAIT);
     }
 
     @After
@@ -552,7 +552,6 @@ public class FirstTest {
                     By.id("org.wikipedia:id/view_page_title_text")
             );
         }
-
 
 
 
