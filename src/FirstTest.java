@@ -420,14 +420,29 @@ public class FirstTest {
                     "Cannot find 'Java (programming language)'",
                     10
             );
+//            waitTillElementBeClickable(
+//                    By.xpath("//android.widget.ImageView[@content-desc='More options']"),
+//                    "Element is not visible"
+//            );
+            waitForElementPresent(
+                    By.xpath("//android.widget.ImageView[@content-desc='More options']"),
+                    "Cannot wait 'More options'",
+                    10
+            );
             waitForElementAndClick(
                     By.xpath("//android.widget.ImageView[@content-desc='More options']"),//класс в котором будем искать кнопку и в нем @content-desc
                     "Cannot find 'More options'",
                     10
             );
+            waitForElementPresent(
+                    By.xpath("//*[@text='Add to reading list']"),
+                    //By.xpath("//android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView"),
+                    "Cannot find 'Add to reading list'",
+                    10
+            );
             waitForElementAndClick(
-                    //By.xpath("//*[@text='Add to reading list']"),
-                    By.xpath("//android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView"),
+                    By.xpath("//*[@text='Add to reading list']"),
+                    //By.xpath("//android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView"),
                     "Cannot find 'Add to reading list'",
                     10
             );
@@ -473,26 +488,37 @@ public class FirstTest {
                     "Linkin Park discography",
                     15
             );
-
+            waitForElementPresent(
+                    By.xpath("//android.widget.ImageView[@content-desc='More options']"),
+                    "cannot wait till more options is render 2 time",
+                    10
+            );
+//            waitTillElementBeClickable(
+//                    By.xpath("//android.widget.ImageView[@content-desc='More options']"),
+//                    "Element 'More option' is not visible"
+//            );
             waitForElementAndClick(
                     By.xpath("//android.widget.ImageView[@content-desc='More options']"),//класс в котором будем искать кнопку и в нем @content-desc
                     "Cannot find 'More options'",
                     15
             );
-            waitForElementAndClick(
-                    //By.xpath("//*[@text='Add to reading list']"),
-                    By.xpath("//android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView"),
+            waitForElementPresent(
+                    By.xpath("//*[@text='Add to reading list']"),
+                    // By.xpath("//android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView"),
                     "Cannot find 'Add to reading list' for second article",
                     15
             );
-
-
             waitForElementAndClick(
-                            By.xpath("//*[@resource-id='org.wikipedia:id/item_container']//*[@text='Learning programming']"),
-                            "Cannot find " +name_of_folder,
-                            5
+                    By.xpath("//*[@text='Add to reading list']"),
+                   // By.xpath("//android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView"),
+                    "Cannot find 'Add to reading list' for second article",
+                    15
             );
-
+            waitForElementAndClick(
+                    By.xpath("//*[@resource-id='org.wikipedia:id/item_container']//*[@text='Learning programming']"),
+                    "Cannot find " +name_of_folder,
+                    5
+            );
             waitForElementAndClick(
                     By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
                     "Cannot tap 'X' icon",
@@ -557,7 +583,7 @@ public class FirstTest {
 
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
-        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds ) ;
         wait.withMessage(error_message + "\n");
         return wait.until(
                 ExpectedConditions.presenceOfElementLocated(by)
@@ -660,5 +686,9 @@ public class FirstTest {
                count_of_titles_expected,
                count_of_titles
        );
+    }
+    private void waitTillElementBeClickable(By by, String error_message){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(by));
     }
 }

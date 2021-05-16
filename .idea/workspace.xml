@@ -55,7 +55,7 @@
     <property name="project.structure.side.proportion" value="0.32873562" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
-  <component name="RunManager" selected="JUnit.FirstTest.testAssertTitleEx6">
+  <component name="RunManager" selected="JUnit.FirstTest.saveTwoArticleToMyList">
     <configuration name="FirstTest.saveFirstArticleToMyList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="JavaAppiumAutomation" />
       <option name="PACKAGE_NAME" value="" />
@@ -108,8 +108,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.FirstTest.testAssertTitleEx6" />
         <item itemvalue="JUnit.FirstTest.saveTwoArticleToMyList" />
+        <item itemvalue="JUnit.FirstTest.testAssertTitleEx6" />
         <item itemvalue="JUnit.FirstTest.testCheckSearchArticleInBackground" />
         <item itemvalue="JUnit.FirstTest.testChangesScreenOrientationOnSearchResults" />
         <item itemvalue="JUnit.FirstTest.saveFirstArticleToMyList" />
