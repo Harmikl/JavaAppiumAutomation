@@ -30,7 +30,7 @@ public class FirstTest {
         capabilities.setCapability("appPackage", "org.wikipedia");
         capabilities.setCapability("appActivity", ".main.MainActivity");
         capabilities.setCapability("app", "/Users/maksimkharmak/Desktop/JavaAppiumAutomation/apks/org.wikipedia.apk");
-       // capabilities.setCapability("udid", "1c88f784220d7ece");
+        //capabilities.setCapability("udid", "1c88f784220d7ece");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 
     }
@@ -368,14 +368,14 @@ public class FirstTest {
 
     }
     @Test
-    public void testCheckSearchArticleInBackground(){
+    public void testCheckSearchArticleInBackground() {
         waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find 'Search Wikipedia'",
                 5
         );
 
-        String search_line= "Java";
+        String search_line = "Java";
 
         waitForElementAndSendKeys(
                 By.xpath("//*[contains(@text,'Search…')]"),
@@ -393,10 +393,142 @@ public class FirstTest {
 
         waitForElementPresent(
                 By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
-                "Cannot find 'Object-oriented programming language' topic searching " + search_line +"after background",
+                "Cannot find 'Object-oriented programming language' topic searching " + search_line + "after background",
                 15
         );
     }
+        @Test
+        public void saveTwoArticleToMyList(){
+            waitForElementAndClick(
+                    By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                    "Cannot find 'Search Wikipedia'",
+                    5
+            );
+            waitForElementAndSendKeys(
+                    By.xpath("//*[contains(@text,'Search…')]"),
+                    "Java",
+                    "Cannot find 'Search…'",
+                    5
+            );
+            waitForElementAndClick(
+                    By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
+                    "Cannot find 'Object-oriented programming language' topic searching by Java",
+                    5
+            );
+            waitForElementPresent(
+                    By.id("org.wikipedia:id/view_page_title_text"),
+                    "Cannot find 'Java (programming language)'",
+                    10
+            );
+            waitForElementAndClick(
+                    By.xpath("//android.widget.ImageView[@content-desc='More options']"),//класс в котором будем искать кнопку и в нем @content-desc
+                    "Cannot find 'More options'",
+                    10
+            );
+            waitForElementAndClick(
+                    //By.xpath("//*[@text='Add to reading list']"),
+                    By.xpath("//android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView"),
+                    "Cannot find 'Add to reading list'",
+                    10
+            );
+            waitForElementAndClick(
+                    By.id("org.wikipedia:id/onboarding_button"),
+                    "Cannot find 'Got it'",
+                    5
+            );
+            waitForElementAndClear(
+                    By.id("org.wikipedia:id/text_input"),
+                    "Cannot find input field to set name of article",
+                    5
+            );
+            String name_of_folder = "Learning programming";
+            waitForElementAndSendKeys(
+                    By.id("org.wikipedia:id/text_input"),
+                    name_of_folder,
+                    "Cannot find put 'Learning programming' in input field",
+                    5
+            );
+            waitForElementAndClick(
+                    By.xpath("//*[@text='OK']"),
+                    "Cannot find 'OK' button ",
+                    5
+            );
+            waitForElementAndClick(
+                    By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                    "Cannot tap 'X' icon",
+                    5
+            ); waitForElementAndClick(
+                    By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                    "Cannot find 'Search Wikipedia'",
+                    5
+            );
+            waitForElementAndSendKeys(
+                    By.xpath("//*[contains(@text,'Search…')]"),
+                    "Linkin Park Diskography",
+                    "Cannot find 'Linkin Park Diskography'",
+                    5
+            );
+            waitForElementAndClick(
+                    By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Linkin Park discography']"),
+                    "Linkin Park discography",
+                    15
+            );
+
+            waitForElementAndClick(
+                    By.xpath("//android.widget.ImageView[@content-desc='More options']"),//класс в котором будем искать кнопку и в нем @content-desc
+                    "Cannot find 'More options'",
+                    15
+            );
+            waitForElementAndClick(
+                    //By.xpath("//*[@text='Add to reading list']"),
+                    By.xpath("//android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView"),
+                    "Cannot find 'Add to reading list' for second article",
+                    15
+            );
+
+
+            waitForElementAndClick(
+                            By.xpath("//*[@resource-id='org.wikipedia:id/item_container']//*[@text='Learning programming']"),
+                            "Cannot find " +name_of_folder,
+                            5
+            );
+
+            waitForElementAndClick(
+                    By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                    "Cannot tap 'X' icon",
+                    5
+            );
+            waitForElementAndClick(
+                    By.xpath("//android.widget.FrameLayout[@content-desc='My lists']"),
+                    "Cannot find 'My lists' icon",
+                    5
+            );
+            waitForElementAndClick(
+                    By.id("org.wikipedia:id/item_title"),
+                    "Cannot find 'Learning programming' in my lists",
+                    5
+            );
+            waitForElementPresent(
+                    By.xpath("//*[@text='"+ name_of_folder + "' ]"),
+                    "Cannot find 'Learning programming' in my lists",
+                    5
+            );
+            swipeElementToLeft(
+                    By.xpath("//*[@text='Java (programming language)']"),
+                    "cannot find Java (programming language) in My lists"
+            );
+            waitForElementNotPresent(
+                    By.xpath("//*[@text='Java (programming language)']"),
+                    "Still Java (programming language) in My lists",
+                    5
+            );
+            waitForElementPresent(
+                    By.xpath("//*[@text='Linkin Park discography']"),
+                    "No Linkin Park discography in My lists",
+                    5
+            );
+        }
+
 
 
 
