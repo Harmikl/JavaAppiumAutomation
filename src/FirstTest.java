@@ -30,7 +30,7 @@ public class FirstTest {
         capabilities.setCapability("appPackage", "org.wikipedia");
         capabilities.setCapability("appActivity", ".main.MainActivity");
         capabilities.setCapability("app", "/Users/maksimkharmak/Desktop/JavaAppiumAutomation/apks/org.wikipedia.apk");
-        //capabilities.setCapability("udid", "1c88f784220d7ece");
+        capabilities.setCapability("udid", "1c88f784220d7ece");
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 
     }
@@ -529,6 +529,30 @@ public class FirstTest {
             );
         }
 
+        @Test
+        public void testAssertTitleEx6(){
+            waitForElementAndClick(
+                    By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                    "Cannot find 'Search Wikipedia'",
+                    5
+            );
+            String search_line="Java";
+            waitForElementAndSendKeys(
+                    By.xpath("//*[contains(@text,'Search…')]"),
+                    search_line,
+                    "Cannot find 'Search…'",
+                    5
+            );
+            waitForElementAndClick(
+                    By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
+                    "Cannot find 'Object-oriented programming language' topic searching by "+search_line,
+                    5
+            );
+            assertElementPresent(
+                    By.id("org.wikipedia:id/view_page_title_text")
+            );
+        }
+
 
 
 
@@ -627,5 +651,15 @@ public class FirstTest {
     private String waitForElementAndGetAttribute(By by,String attribute, String error_message, long timeoutInSeconds){
         WebElement element = waitForElementPresent( by, error_message, timeoutInSeconds);
         return element.getAttribute(attribute);
+    }
+    private void assertElementPresent(By by ){
+       List elements = driver.findElements(by);
+       int count_of_titles= elements.size();
+       int count_of_titles_expected=1;
+       Assert.assertEquals(
+               "There are no title found",
+               count_of_titles_expected,
+               count_of_titles
+       );
     }
 }
