@@ -102,7 +102,7 @@ public class MainPageObject {
                 .release()
                 .perform();
     }
-    public int getAmountOfElement(By by){
+    public  int getAmountOfElement(By by){
         List elements = driver.findElements(by);
         // List - фуекция которая создает некий список, element -  название переменной,
         // то есть мы возвращаем количество элементов, которые нашли при помощи  driver.findElements(by)
@@ -116,6 +116,16 @@ public class MainPageObject {
         List elements = driver.findElements(by);
         int count_of_titles= elements.size();
         int count_of_titles_expected=1;
+        Assert.assertEquals(
+                "There are no title found",
+                count_of_titles_expected,
+                count_of_titles
+        );
+    }
+    public void assertElementNotPresent(By by,String error_message ){
+        List elements = driver.findElements(by);
+        int count_of_titles= elements.size();
+        int count_of_titles_expected=0;
         Assert.assertEquals(
                 "There are no title found",
                 count_of_titles_expected,

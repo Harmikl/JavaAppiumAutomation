@@ -24,13 +24,26 @@ public class CoreTestCase extends TestCase {//
         capabilities.setCapability("appPackage", "org.wikipedia");
         capabilities.setCapability("appActivity", ".main.MainActivity");
         capabilities.setCapability("app", "/Users/maksimkharmak/Desktop/JavaAppiumAutomation/apks/org.wikipedia.apk");
-        capabilities.setCapability("udid", "1c88f784220d7ece");
+        //capabilities.setCapability("udid", "1c88f784220d7ece");
         driver = new AndroidDriver(new URL(AppiumUrl), capabilities);
-        driver.rotate(ScreenOrientation.PORTRAIT);
+        this.rotateScreenPortrait();
     }
 @Override
     protected void tearDown() throws Exception{
         driver.quit();
         super.tearDown();
+    }
+    public void rotateScreenPortrait()
+    {
+        driver.rotate(ScreenOrientation.PORTRAIT);
+    }
+    public void rotateScreenLandscape()
+    {
+        driver.rotate(ScreenOrientation.LANDSCAPE);
+    }
+    protected void backgroundApp(int seconds)
+    {
+        driver.runAppInBackground(seconds); //отправляем аппку в бэк, через кол секунд в скобках аппка достанестя из бэка
+
     }
 }
