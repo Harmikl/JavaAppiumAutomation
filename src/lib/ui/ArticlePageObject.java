@@ -14,7 +14,8 @@ public class ArticlePageObject extends MainPageObject{
     ADD_TO_MY_LIST_OVERLAY = "org.wikipedia:id/onboarding_button",
     MY_LIST_NAME_INPUT = "org.wikipedia:id/text_input",
     MY_LIST_OK_BUTTON = "//*[@text='OK']",
-    CLOSE_ARTICLE_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']";
+    CLOSE_ARTICLE_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']",
+    ARTICLE_OF_READING_LIST = "//*[@resource-id='org.wikipedia:id/item_container']//*[@text='Learning programming']";
     public ArticlePageObject (AppiumDriver driver)
     {
         super(driver);
@@ -75,6 +76,30 @@ public class ArticlePageObject extends MainPageObject{
                 "Cannot find 'OK' button ",
                 5
         );
+    }
+    public void addArticleToMyListSecondTime (String name_of_folder)
+    {
+        this.waitTillElementBeClickable(
+                By.xpath(OPTIONS_BUTTON),
+                "Element more options is not visible"
+        );
+        this.waitForElementAndClick(
+                By.xpath(OPTIONS_BUTTON),//класс в котором будем искать кнопку и в нем @content-desc
+                "Cannot find 'More options'",
+                10
+        );
+        this.waitForElementAndClick(
+                //By.xpath("//*[@text='Add to reading list']"),
+                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                "Cannot find 'Add to reading list'",
+                10
+        );
+        this.waitForElementAndClick(
+                By.xpath(ARTICLE_OF_READING_LIST),
+                "Cannot find " +name_of_folder,
+                5
+        );
+
     }
     public void closeArticle()
     {

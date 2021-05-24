@@ -1,6 +1,7 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.ui.MainPageObject;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -18,7 +19,7 @@ public class SearchTests extends CoreTestCase
         SearchPageObject.waitForSearchResult("Object-oriented programming language");
     }
     @Test
-    public void testCancelSearch() {
+    public void testCancelSearchEx3() {
         SearchPageObject SearchPageObject = new SearchPageObject(driver);
 
         SearchPageObject.initSearchInput();
@@ -51,58 +52,46 @@ public class SearchTests extends CoreTestCase
         SearchPageObject.assertThereIsNoResultOfSearch();
 
     }
-    @Test
-    public void testCheckJavaWordInSearchResults() {
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                "Cannot find 'Search Wikipedia'",
-                5
-        );
-        MainPageObject.waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search…')]"),
-                "JAVA",
-                "Cannot find 'Search…'",
-                10
-        );
-        MainPageObject.waitForElementPresent(
-                By.id("org.wikipedia:id/page_list_item_container"),
-                " Cannot find item containers '",
-                5
-        );
-        List<WebElement> listOfElementsWithItemContainers =  driver.findElements(By.id("org.wikipedia:id/page_list_item_container")); //находим количество контейнеров
-
-        MainPageObject.waitForElementPresent(
-                By.xpath("//*[contains(@text,'Java')]"),
-                "Cannot find 'Java '",
-                5
-        );
-        List<WebElement> listOfElementsWithJava =  driver.findElements(By.xpath("//*[contains(@text,'Java')]")); //находим количество xpath с текстом 'Java'
-
-        assertEquals(
-                "List of containers is not equal to list of xpathes with 'Java' text",
-                listOfElementsWithItemContainers.size(),
-                listOfElementsWithJava.size()
-        );
-
+//    @Test
+//    public void testCheckJavaWordInSearchResults() {
+//        MainPageObject.waitForElementAndClick(
+//                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+//                "Cannot find 'Search Wikipedia'",
+//                5
+//        );
+//        MainPageObject.waitForElementAndSendKeys(
+//                By.xpath("//*[contains(@text,'Search…')]"),
+//                "JAVA",
+//                "Cannot find 'Search…'",
+//                10
+//        );
+//        MainPageObject.waitForElementPresent(
+//                By.id("org.wikipedia:id/page_list_item_container"),
+//                " Cannot find item containers '",
+//                5
+//        );
+//        List<WebElement> listOfElementsWithItemContainers =  driver.findElements(By.id("org.wikipedia:id/page_list_item_container")); //находим количество контейнеров
+//
+//        MainPageObject.waitForElementPresent(
+//                By.xpath("//*[contains(@text,'Java')]"),
+//                "Cannot find 'Java '",
+//                5
+//        );
+//        List<WebElement> listOfElementsWithJava =  driver.findElements(By.xpath("//*[contains(@text,'Java')]")); //находим количество xpath с текстом 'Java'
+//
+//        assertEquals(
+//                "List of containers is not equal to list of xpathes with 'Java' text",
+//                listOfElementsWithItemContainers.size(),
+//                listOfElementsWithJava.size()
+//        );
+//
         @Test
         public void testAssertTitleEx6(){
-            MainPageObject.waitForElementAndClick(
-                    By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                    "Cannot find 'Search Wikipedia'",
-                    5
-            );
-            String search_line="Java";
-            MainPageObject.waitForElementAndSendKeys(
-                    By.xpath("//*[contains(@text,'Search…')]"),
-                    search_line,
-                    "Cannot find 'Search…'",
-                    5
-            );
-            MainPageObject.waitForElementAndClick(
-                    By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
-                    "Cannot find 'Object-oriented programming language' topic searching by "+search_line,
-                    5
-            );
+            SearchPageObject SearchPageObject = new SearchPageObject(driver);
+            SearchPageObject.initSearchInput();
+            SearchPageObject.typeSearchLine("Java");
+            SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+            MainPageObject MainPageObject = new MainPageObject(driver);
             MainPageObject.assertElementPresent(
                     By.id("org.wikipedia:id/view_page_title_text")
             );
