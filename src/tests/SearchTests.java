@@ -85,5 +85,13 @@ public class SearchTests extends CoreTestCase {
                     By.id("org.wikipedia:id/view_page_title_text")
             );
         }
+        @Test
+    public void testFindTitleAndDescription ()
+        {
+            SearchPageObject SearchPageObject = new SearchPageObject(driver);
+            SearchPageObject.initSearchInput();
+            SearchPageObject.typeSearchLine("Java");
+            SearchPageObject.waitForkArticleWithExactTitleAndDescription("Java","Object-oriented programming language");
+        }
     }
 
