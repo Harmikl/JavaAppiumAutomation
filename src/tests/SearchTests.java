@@ -86,12 +86,25 @@ public class SearchTests extends CoreTestCase {
             );
         }
         @Test
-    public void testFindTitleAndDescription ()
+    public void testFindMoreThan3TitleAndDescription ()
         {
             SearchPageObject SearchPageObject = new SearchPageObject(driver);
             SearchPageObject.initSearchInput();
-            SearchPageObject.typeSearchLine("Java");
-            SearchPageObject.waitForkArticleWithExactTitleAndDescription("Java","Object-oriented programming language");
+            String search_line ="Java";
+            SearchPageObject.typeSearchLine(search_line);
+            int amount_of_titles_and_descriptions = SearchPageObject.getResultByTitleAndDescription();
+            assertTrue(
+                    "no one title and description by  request "+search_line,
+                    amount_of_titles_and_descriptions>=3
+            );
         }
+    @Test
+    public void testFindMTitleAndDescriptionByJavaRequest ()
+    {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.waitForElementByTitleAndDescription("Java","Object-oriented programming language");
+    }
     }
 

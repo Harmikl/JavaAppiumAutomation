@@ -1,7 +1,6 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 
 public class SearchPageObject  extends MainPageObject{
@@ -10,8 +9,8 @@ public class SearchPageObject  extends MainPageObject{
             SEARCH_INPUT = "//*[contains(@text,'Search…')]",
             SEARCH_CANCEL_BUTTON = "org.wikipedia:id/search_close_btn",
             SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='{SUBSTRING}']",
-            //SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@resource-id ='org.wikipedia:id/page_list_item_title']/..[@resource-id ='org.wikipedia:id/page_list_item_description']",
-            SEARCH_RESULT_BY_EXACT_TITLE = "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='{TITLE}']/../*[@text='{DESCRIPTION}']",
+            SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@resource-id ='org.wikipedia:id/page_list_item_title']/../*[@resource-id ='org.wikipedia:id/page_list_item_description']",
+            SEARCH_RESULT_BY_EXACT_TITLE_AND_DESCRIPTION_TPL = "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[contains(@text,'{TITLE}')]/..//*[@text='{DESCRIPTION}']",
             SEARCH_RESULT_ELEMENT = "//*[@resource-id='org.wikipedia:id/search_results_list']/*[@resource-id='org.wikipedia:id/page_list_item_container']",
             SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results found']";
     public SearchPageObject(AppiumDriver driver)
@@ -22,9 +21,14 @@ public class SearchPageObject  extends MainPageObject{
     private static String getResultSearchElement (String substring){
         return SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
     }
-    private static String getResultByTitleAndDescription (String title, String description)
+    private static String getResultByExactTitleAndDescription(String title, String description)
     {
-        return SEARCH_RESULT_BY_EXACT_TITLE.replace("{TITLE}", title).replace("{DESCRIPTION}", description);
+        return SEARCH_RESULT_BY_EXACT_TITLE_AND_DESCRIPTION_TPL.replace("{TITLE}", title).replace("{DESCRIPTION}", description);
+    }
+    public int  getResultByTitleAndDescription()
+    {
+        this.waitForElementPresent(By.xpath(SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION), "Cannot find title and description",10);
+        return this.getAmountOfElement(By.xpath(SEARCH_RESULT_BY_TITLE_AND_DESCRIPTION));
     }
     /*template methods*/
     public void initSearchInput (){ //при заруске находит поиск, тапает по нужному элементу, и проверяет что инпут есть
@@ -56,11 +60,10 @@ public class SearchPageObject  extends MainPageObject{
 
         this.waitForElementAndClick(By.xpath(search_result_xpath),"cannot find and click search result with substring " + substring, 10);
     }
-    public void waitForkArticleWithExactTitleAndDescription (String title, String description)
+    public void waitForElementByTitleAndDescription (String title, String description)
     {
-        String title_of_article = getResultByTitleAndDescription(title,description);
-//        this.waitForElementPresent(By.xpath(title_of_article),"cannot find title and description"+title_of_article ,10);
-        System.out.println(title_of_article);
+        String title_of_article = getResultByExactTitleAndDescription(title,description);
+        this.waitForElementPresent(By.xpath(title_of_article),"cannot find title and description"+title ,10);
     }
     public int getAmountOfFoundArticles ()
     {
