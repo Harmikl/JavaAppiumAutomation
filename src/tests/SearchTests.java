@@ -39,7 +39,6 @@ public class SearchTests extends CoreTestCase {
         assertTrue(
                 "We found few results",
                 amount_of_search_result > 0
-
         );
     }
 
@@ -60,13 +59,13 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.initSearchInput();
         String search_line = "JAVA";
         SearchPageObject.typeSearchLine(search_line);
-        String id_for_item_container = "org.wikipedia:id/page_list_item_container";
-        SearchPageObject.waitForElementPresent(By.id(id_for_item_container), " Cannot find item containers", 5);
-        List<WebElement> listOfElementsWithItemContainers = driver.findElements(By.id(id_for_item_container)); //находим количество контейнеров
+        String id_for_item_container = "id:org.wikipedia:id/page_list_item_container";
+        SearchPageObject.waitForElementPresent(id_for_item_container, " Cannot find item containers", 5);
+        List<WebElement> listOfElementsWithItemContainers = driver.findElements(By.id("org.wikipedia:id/page_list_item_container")); //находим количество контейнеров
 
-        String xpath_for_java_contains = "//*[contains(@text,'Java')]";
-        SearchPageObject.waitForElementPresent(By.xpath(xpath_for_java_contains), "Cannot find java in containers", 10);
-        List<WebElement> listOfElementsWithJava = driver.findElements(By.xpath(xpath_for_java_contains)); //находим количество xpath с текстом 'Java'
+        String xpath_for_java_contains = "xpath://*[contains(@text,'Java')]";
+        SearchPageObject.waitForElementPresent(xpath_for_java_contains, "Cannot find java in containers", 10);
+        List<WebElement> listOfElementsWithJava = driver.findElements(By.xpath("//*[contains(@text,'Java')]")); //находим количество xpath с текстом 'Java'
 
         assertEquals(
                 "List of containers is not equal to list of xpathes with 'Java' text",
@@ -82,7 +81,7 @@ public class SearchTests extends CoreTestCase {
             SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
             MainPageObject MainPageObject = new MainPageObject(driver);
             MainPageObject.assertElementPresent(
-                    By.id("org.wikipedia:id/view_page_title_text")
+                    "id:org.wikipedia:id/view_page_title_text"
             );
         }
         @Test

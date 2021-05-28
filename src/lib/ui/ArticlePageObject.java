@@ -1,28 +1,26 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class ArticlePageObject extends MainPageObject{
     private static final String
-    TITLE="org.wikipedia:id/view_page_title_text",
-    FOOTER_ELEMENT = "//*[contains(@text,'View page in browser')]",
-    OPTIONS_BUTTON = "//android.widget.ImageView[@content-desc='More options']",
-    OPTIONS_ADD_TO_MY_LIST_BUTTON = "//android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView",
-    ADD_TO_MY_LIST_OVERLAY = "org.wikipedia:id/onboarding_button",
-    MY_LIST_NAME_INPUT = "org.wikipedia:id/text_input",
-    MY_LIST_OK_BUTTON = "//*[@text='OK']",
-    CLOSE_ARTICLE_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']",
-    ARTICLE_OF_READING_LIST = "//*[@resource-id='org.wikipedia:id/item_container']//*[@text='Learning programming']";
+    TITLE="id:org.wikipedia:id/view_page_title_text",
+    FOOTER_ELEMENT = "xpath://*[contains(@text,'View page in browser')]",
+    OPTIONS_BUTTON = "xpath://android.widget.ImageView[@content-desc='More options']",
+    OPTIONS_ADD_TO_MY_LIST_BUTTON = "xpath://android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView",
+    ADD_TO_MY_LIST_OVERLAY = "id:org.wikipedia:id/onboarding_button",
+    MY_LIST_NAME_INPUT = "id:org.wikipedia:id/text_input",
+    MY_LIST_OK_BUTTON = "xpath://*[@text='OK']",
+    CLOSE_ARTICLE_BUTTON = "xpath://android.widget.ImageButton[@content-desc='Navigate up']",
+    ARTICLE_OF_READING_LIST = "xpath://*[@resource-id='org.wikipedia:id/item_container']//*[@text='Learning programming']";
     public ArticlePageObject (AppiumDriver driver)
     {
         super(driver);
     }
     public WebElement waitForTitleElement()
     {
-        return this.waitForElementPresent(By.id(TITLE),"cannot find article title on page", 15);
+        return this.waitForElementPresent(TITLE,"cannot find article title on page", 15);
     }
     public String getArticleTitle ()
     {
@@ -32,7 +30,7 @@ public class ArticlePageObject extends MainPageObject{
     public void swipeToFooter()
     {
         this.swipeUpToFindElement(
-                By.xpath(FOOTER_ELEMENT),
+                FOOTER_ELEMENT,
                 "cannot find the end of article",
                 20
         );
@@ -40,39 +38,39 @@ public class ArticlePageObject extends MainPageObject{
     public void addArticleToMyList (String name_of_folder)
     {
         this.waitTillElementBeClickable(
-                By.xpath(OPTIONS_BUTTON),
+                OPTIONS_BUTTON,
                 "Element more options is not visible"
         );
         this.waitForElementAndClick(
-                By.xpath(OPTIONS_BUTTON),//класс в котором будем искать кнопку и в нем @content-desc
+                OPTIONS_BUTTON,//класс в котором будем искать кнопку и в нем @content-desc
                 "Cannot find 'More options'",
                 10
         );
         this.waitForElementAndClick(
                 //By.xpath("//*[@text='Add to reading list']"),
-                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                OPTIONS_ADD_TO_MY_LIST_BUTTON,
                 "Cannot find 'Add to reading list'",
                 10
         );
         this.waitForElementAndClick(
-                By.id(ADD_TO_MY_LIST_OVERLAY),
+                ADD_TO_MY_LIST_OVERLAY,
                 "Cannot find 'Got it'",
                 5
         );
         this.waitForElementAndClear(
-                By.id(MY_LIST_NAME_INPUT),
+                MY_LIST_NAME_INPUT,
                 "Cannot find input field to set name of article",
                 5
         );
 
         this.waitForElementAndSendKeys(
-                By.id(MY_LIST_NAME_INPUT),
+                MY_LIST_NAME_INPUT,
                 name_of_folder,
                 "Cannot find put 'Learning programming' in input field",
                 5
         );
         this.waitForElementAndClick(
-                By.xpath(MY_LIST_OK_BUTTON),
+                MY_LIST_OK_BUTTON,
                 "Cannot find 'OK' button ",
                 5
         );
@@ -80,22 +78,22 @@ public class ArticlePageObject extends MainPageObject{
     public void addArticleToMyListSecondTime (String name_of_folder)
     {
         this.waitTillElementBeClickable(
-                By.xpath(OPTIONS_BUTTON),
+                OPTIONS_BUTTON,
                 "Element more options is not visible"
         );
         this.waitForElementAndClick(
-                By.xpath(OPTIONS_BUTTON),//класс в котором будем искать кнопку и в нем @content-desc
+                OPTIONS_BUTTON,//класс в котором будем искать кнопку и в нем @content-desc
                 "Cannot find 'More options'",
                 10
         );
         this.waitForElementAndClick(
                 //By.xpath("//*[@text='Add to reading list']"),
-                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                OPTIONS_ADD_TO_MY_LIST_BUTTON,
                 "Cannot find 'Add to reading list'",
                 10
         );
         this.waitForElementAndClick(
-                By.xpath(ARTICLE_OF_READING_LIST),
+                ARTICLE_OF_READING_LIST,
                 "Cannot find " +name_of_folder,
                 5
         );
@@ -104,7 +102,7 @@ public class ArticlePageObject extends MainPageObject{
     public void closeArticle()
     {
         this.waitForElementAndClick(
-                By.xpath(CLOSE_ARTICLE_BUTTON),
+                CLOSE_ARTICLE_BUTTON,
                 "Cannot tap 'X' icon",
                 5
         );
