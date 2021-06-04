@@ -6,7 +6,8 @@ import org.openqa.selenium.WebElement;
 
 abstract public class ArticlePageObject extends MainPageObject{
     protected static String
-    TITLE,
+            TITLE,
+            TITLE_1,
     FOOTER_ELEMENT ,
     OPTIONS_BUTTON ,
     OPTIONS_ADD_TO_MY_LIST_BUTTON ,
@@ -20,13 +21,25 @@ abstract public class ArticlePageObject extends MainPageObject{
     {
         super(driver);
     }
-    public WebElement waitForTitleElement()
+    public WebElement waitForTitleElement() {
+            return this.waitForElementPresent(TITLE, "cannot find article title on page", 15);
+    }
+    public WebElement waitForTitleElement1()
     {
-        return this.waitForElementPresent(TITLE,"cannot find article title on page", 15);
+        return this.waitForElementPresent(TITLE_1,"cannot find article 1 title on page",15);
     }
     public String getArticleTitle ()
     {
         WebElement title_element = waitForTitleElement();
+        if (Platform.getInstance().isAndroid()) {
+            return title_element.getAttribute("text");
+        }else {
+            return title_element.getAttribute("name");
+        }
+    }
+    public String getArticleTitle1 ()
+    {
+        WebElement title_element = waitForTitleElement1();
         if (Platform.getInstance().isAndroid()) {
             return title_element.getAttribute("text");
         }else {

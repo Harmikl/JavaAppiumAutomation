@@ -26,10 +26,9 @@ private static final String name_of_folder = "Learning programming";
             ArticlePageObject.addArticleToMyList(name_of_folder);
         }else ArticlePageObject.addArticleToMySaved();
 
-        if (Platform.getInstance().isAndroid()) {
-            ArticlePageObject.closeArticle();
-        }else {
-            ArticlePageObject.closeArticle();
+        ArticlePageObject.closeArticle();
+
+        if (Platform.getInstance().isIOS()){
             ArticlePageObject.cancelOnSearchField();
         }
 
@@ -43,7 +42,7 @@ private static final String name_of_folder = "Learning programming";
         MyListsPageObject.swipeByArticleToDelete(article_title);
     }
     @Test
-    public void testSaveTwoArticleToMyListEx5(){
+    public void testSaveTwoArticleToMyListEx5() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -51,25 +50,49 @@ private static final String name_of_folder = "Learning programming";
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
-        String article_title1 = ArticlePageObject.getArticleTitle();
-        String name_of_folder = "Learning programming";
-        ArticlePageObject.addArticleToMyList(name_of_folder);
+        String article_title = ArticlePageObject.getArticleTitle();
+
+        if (Platform.getInstance().isAndroid()) {
+            ArticlePageObject.addArticleToMyList(name_of_folder);
+        } else ArticlePageObject.addArticleToMySaved();
+
         ArticlePageObject.closeArticle();
+
+        if (Platform.getInstance().isIOS()) {
+            ArticlePageObject.cancelOnSearchField();
+        }
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Linkin Park Diskography");
         SearchPageObject.clickByArticleWithSubstring("Linkin Park discography");
 
-        ArticlePageObject.waitForTitleElement();
-        String article_title2 = ArticlePageObject.getArticleTitle();
-        ArticlePageObject.addArticleToMyListSecondTime(name_of_folder);
+        if (Platform.getInstance().isAndroid()) {
+            ArticlePageObject.waitForTitleElement();
+        } else{
+            ArticlePageObject.waitForTitleElement1();
+    }
+
+
+        if (Platform.getInstance().isAndroid()) {
+            ArticlePageObject.addArticleToMyListSecondTime(name_of_folder);
+        }else ArticlePageObject.addArticleToMySaved();
+
         ArticlePageObject.closeArticle();
+
+        if (Platform.getInstance().isIOS()){
+            ArticlePageObject.cancelOnSearchField();
+        }
 
         NavigationUI NavigationUI =  NavigationUIFactory.get(driver);
         NavigationUI.clickMyLists();
 
         MyListsPageObject MyListsPageObject =  MyListsPageObjectFactory.get(driver);
-        MyListsPageObject.openFolderByName(name_of_folder);
-        MyListsPageObject.swipeByArticleToDelete(article_title1);
+
+        if (Platform.getInstance().isAndroid()){
+            MyListsPageObject.openFolderByName(name_of_folder);
+        }
+
+        MyListsPageObject.swipeByArticleToDelete(article_title);
+        MyListsPageObject.articleIsNotDeleted();
   }
 }

@@ -7,6 +7,7 @@ public class IOSArticlePageObject extends ArticlePageObject
 {
     static {
         TITLE = "id:Java (programming language)";
+        TITLE_1 = "id:Linkin Park discography";
         FOOTER_ELEMENT = "id:View article in browser";
         OPTIONS_ADD_TO_MY_LIST_BUTTON = "xpath://XCUIElementTypeButton[@name='Save for later']";
         CLOSE_ARTICLE_BUTTON = "id:Back";

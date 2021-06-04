@@ -7,7 +7,8 @@ import org.openqa.selenium.By;
 abstract public class MyListsPageObject extends MainPageObject {
     protected static  String
     FOLDER_BY_NAME_TPL ,
-    ARTICLE_BY_TITLE_TPL ;
+    ARTICLE_BY_TITLE_TPL ,
+    ARTICLE_IS_NOT_DELETED;
 
     private static String getFolderXpathByName(String name_of_folder)
     {
@@ -54,7 +55,10 @@ abstract public class MyListsPageObject extends MainPageObject {
                 this.clickElementToTheRightUpperCorner(artical_xpath,"Cannot find saved article");
             }
                 this.waitForArticleToDisappearByTitle(article_title);
-
+    }
+    public void articleIsNotDeleted()
+    {
+            this.waitForElementPresent(ARTICLE_IS_NOT_DELETED, "Cannot find not deleted article",10);
     }
 
 }
