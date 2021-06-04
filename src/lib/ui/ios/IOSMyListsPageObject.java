@@ -7,7 +7,7 @@ public class IOSMyListsPageObject extends MyListsPageObject {
     static
     {
         ARTICLE_BY_TITLE_TPL = "xpath://XCUIElementTypeLink[contains(@name,'{TITLE}')]";
-        ARTICLE_IS_NOT_DELETED = "id:Linkin Park discography Band discography"; //xpath://XCUIElementTypeLink[@name='Linkin Park discography Band discography']
+        ARTICLE_IS_NOT_DELETED = "xpath://XCUIElementTypeApplication[@name='Wikipedia']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeCollectionView/XCUIElementTypeCell"; //xpath://XCUIElementTypeLink[@name='Linkin Park discography Band discography']
 
     }
     public IOSMyListsPageObject (AppiumDriver driver)
